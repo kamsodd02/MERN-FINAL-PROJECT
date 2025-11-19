@@ -239,7 +239,6 @@ const responseSchema = new mongoose.Schema({
 responseSchema.index({ questionnaire: 1, createdAt: -1 });
 responseSchema.index({ respondent: 1, createdAt: -1 });
 responseSchema.index({ status: 1, 'metadata.submittedAt': -1 });
-responseSchema.index({ 'metadata.sessionId': 1 }, { unique: true });
 responseSchema.index({ 'qualityChecks.isSuspicious': 1 });
 responseSchema.index({ questionnaire: 1, status: 1, 'metadata.submittedAt': -1 });
 

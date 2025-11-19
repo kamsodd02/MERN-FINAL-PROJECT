@@ -1,26 +1,36 @@
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
-  try {
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/mern-questionnaire';
+    try {
+    // Try local MongoDB first for development
+    const localUri = process.env.MONGODB_URI_LOCAL || 'mongodb://localhost:27017/mern-questionnaire';
+    const atlasUri = process.env.MONGODB_URI;
 
-    const options = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      // Connection pool settings
-      maxPoolSize: 10, // Maintain up to 10 socket connections
-      serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
-      socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
-      bufferCommands: false, // Disable mongoose buffering
-      bufferMaxEntries: 0, // Disable mongoose buffering
-      // Retry settings
-      retryWrites: true,
-      retryReads: true,
-    };
+    let connectionUri = localUri;
 
-    const conn = await mongoose.connect(mongoURI, options);
+    // In production, use Atlas
+    if (process.env.NODE_ENV === 'production' && atlasUri) {
+      connectionUri = atlasUri;
+    }
 
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`🔄 Attempting to connect to MongoDB...`);
+    console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🔗 Connection URI: ${connectionUri.replace(/:([^:@]{4})[^:@]*@/, ':****@')}`); // Hide password in logs
+
+    try {
+      await mongoose.connect(connectionUri);
+      console.log("✅ MongoDB connected successfully");
+    } catch (localError) {
+      if (process.env.NODE_ENV === 'development' && atlasUri && localError.message.includes('ECONNREFUSED')) {
+        console.log("⚠️  Local MongoDB connection failed, trying MongoDB Atlas...");
+        await mongoose.connect(atlasUri);
+        console.log("✅ MongoDB Atlas connected successfully");
+      } else {
+        throw localError;
+      }
+    }
+
+    const connection = mongoose.connection;
 
     // Handle connection events
     mongoose.connection.on('connected', () => {
@@ -42,7 +52,7 @@ const connectDB = async () => {
       process.exit(0);
     });
 
-    return conn;
+    return connection;
   } catch (error) {
     console.error('Database connection error:', error.message);
     process.exit(1);

@@ -148,7 +148,6 @@ userSchema.virtual('fullName').get(function() {
 });
 
 // Index for performance
-userSchema.index({ email: 1 }, { unique: true });
 userSchema.index({ 'workspaces.workspace': 1 });
 userSchema.index({ role: 1, isActive: 1 });
 userSchema.index({ createdAt: -1 });

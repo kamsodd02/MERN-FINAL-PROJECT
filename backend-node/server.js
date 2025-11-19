@@ -21,6 +21,10 @@ const AuditLog = require('./models/AuditLog');
 // Import routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
+const questionnaireRoutes = require('./routes/questionnaires');
+const responseRoutes = require('./routes/responses');
+const workspaceRoutes = require('./routes/workspaces');
+const analyticsRoutes = require('./routes/analytics');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -53,6 +57,10 @@ app.get('/health', (req, res) => {
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/questionnaires', questionnaireRoutes);
+app.use('/api/responses', responseRoutes);
+app.use('/api/workspaces', workspaceRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 // API Routes (placeholders - will be implemented in separate route files)
 app.get('/api/test', (req, res) => {
@@ -69,19 +77,20 @@ app.get('/api/test', (req, res) => {
     },
     routes: {
       auth: true,
-      users: true
+      users: true,
+      questionnaires: true,
+      responses: true,
+      workspaces: true,
+      analytics: true
     }
   });
 });
 
 // 404 handler
-app.use('*', (req, res) => {
-  res.status(404).json({
-    error: 'Route not found',
-    path: req.originalUrl,
-    method: req.method
-  });
+app.use((req, res) => {
+  res.status(404).json({ message: 'Route not found' });
 });
+
 
 // Error handling middleware
 app.use((error, req, res, next) => {
