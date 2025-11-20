@@ -22,7 +22,9 @@ import Register from './pages/Auth/Register';
 import PrivateRoute from './components/Auth/PrivateRoute';
 
 // Public Components
-import PublicQuestionnaire from './pages/Public/PublicQuestionnaire';
+// In App.jsx
+import PublicQuestionnaire from './pages/Public/PublicQuestionnaire.jsx';
+
 
 function App() {
   return (
