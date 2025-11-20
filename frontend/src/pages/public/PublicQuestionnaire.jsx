@@ -18,8 +18,8 @@ const PublicQuestionnaire = () => {
 
   useEffect(() => {
     const fetchQuestionnaire = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/api/questionnaires/preview/${id}`);
+      try { 
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/questionnaires/preview/${id}`);
         setQuestionnaire(response.data);
       } catch (error) {
         console.error('Error fetching questionnaire:', error);
@@ -77,8 +77,7 @@ const PublicQuestionnaire = () => {
         questionId: question.id,
         answer: answers[question.id] || ''
       }));
-
-      await axios.post(`http://localhost:5000/api/responses/questionnaires/${id}`, {
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/responses/questionnaires/${id}`, {
         answers: formattedAnswers
       });
 
