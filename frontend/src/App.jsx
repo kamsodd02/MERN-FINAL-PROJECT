@@ -23,7 +23,7 @@ import PrivateRoute from './components/Auth/PrivateRoute';
 
 // Public Components
 // In App.jsx
-import PublicQuestionnaire from './pages/Public/PublicQuestionnaire';
+import PublicQuestionnaire from './pages/public/PublicQuestionnaire';
 
 
 
