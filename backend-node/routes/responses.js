@@ -8,11 +8,13 @@ const { authenticate } = require('../middleware/auth');
 
 const router = express.Router();
 
-// POST /api/questionnaires/:questionnaireId/responses - Submit response
-router.post('/questionnaires/:questionnaireId/responses', async (req, res) => {
+// POST /api/responses/questionnaires/:questionnaireId - Submit response
+router.post('/questionnaires/:questionnaireId', async (req, res) => {
   try {
     const { questionnaireId } = req.params;
     const { answers, respondentEmail, isAnonymous = false } = req.body;
+
+    // Debug logs removed - working correctly
 
     // Find questionnaire
     const questionnaire = await Questionnaire.findById(questionnaireId);
@@ -78,7 +80,7 @@ router.post('/questionnaires/:questionnaireId/responses', async (req, res) => {
     // Create or update response
     let response = await Response.findOne({
       questionnaire: questionnaireId,
-      respondent: isAnonymous ? null : req.user?.userId,
+      respondent: isAnonymous ? null : req.user?._id,
       status: { $in: ['in_progress', 'completed'] }
     });
 
@@ -87,10 +89,11 @@ router.post('/questionnaires/:questionnaireId/responses', async (req, res) => {
     if (!response) {
       response = new Response({
         questionnaire: questionnaireId,
-        respondent: isAnonymous ? null : req.user?.userId,
+        respondent: isAnonymous ? null : req.user?._id,
         respondentEmail: respondentEmail || req.user?.email,
         answers: [],
         metadata: {
+          sessionId: `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
           ipAddress: req.ip,
           userAgent: req.get('User-Agent'),
           startedAt: new Date()
@@ -108,17 +111,29 @@ router.post('/questionnaires/:questionnaireId/responses', async (req, res) => {
       if (existingAnswerIndex >= 0) {
         response.answers[existingAnswerIndex] = {
           ...response.answers[existingAnswerIndex],
+          questionId: newAnswer.questionId, // Ensure questionId is preserved
           answer: newAnswer.answer,
-          timestamp: new Date()
+          answeredAt: new Date()
         };
       } else {
         response.answers.push({
           questionId: newAnswer.questionId,
           answer: newAnswer.answer,
-          timestamp: new Date()
+          answeredAt: new Date()
         });
       }
     });
+
+    // Ensure all answers have questionType
+    response.answers.forEach((answer, index) => {
+      if (!answer.questionType) {
+        const question = questionnaire.questions ? questionnaire.questions.find(q => q.id === answer.questionId) : null;
+        answer.questionType = question && question.type ? question.type : 'text_short';
+      }
+    });
+
+    // Debug: Check answers before validation
+    console.log('Final response answers after fix:', response.answers);
 
     // Check if response is complete
     const requiredQuestions = questionnaire.questions.filter(q => q.required);
@@ -147,14 +162,14 @@ router.post('/questionnaires/:questionnaireId/responses', async (req, res) => {
 
     // Log response submission
     await AuditLog.create({
-      user: req.user?.userId || null,
-      action: response.status === 'completed' ? 'submit_response' : 'save_progress',
-      resource: 'response',
-      resourceId: response._id,
-      details: {
-        questionnaireId,
-        isAnonymous,
-        status: response.status
+      user: req.user?._id || null,
+      userEmail: req.user?.email || null,
+      action: response.status === 'completed' ? 'response_create' : 'response_update',
+      entityType: 'response',
+      entityId: response._id,
+      metadata: {
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent')
       }
     });
 
@@ -222,18 +237,30 @@ router.put('/:id', authenticate, async (req, res) => {
         a => a.questionId === newAnswer.questionId
       );
 
+      // Get question type from questionnaire
+      const question = questionnaire.questions ? questionnaire.questions.find(q => q.id === newAnswer.questionId) : null;
+      const questionType = question && question.type ? question.type : 'text_short';
+
+      // Debug logging
+      console.log('Processing answer:', newAnswer.questionId, 'question found:', !!question, 'questionType:', questionType);
+
+      const answerData = {
+        questionId: newAnswer.questionId,
+        questionType,
+        answer: newAnswer.answer,
+        answeredAt: new Date()
+      };
+
+      console.log('Created answerData:', answerData);
+
       if (existingAnswerIndex >= 0) {
         response.answers[existingAnswerIndex] = {
           ...response.answers[existingAnswerIndex],
-          answer: newAnswer.answer,
-          timestamp: new Date()
+          ...answerData
         };
       } else {
-        response.answers.push({
-          questionId: newAnswer.questionId,
-          answer: newAnswer.answer,
-          timestamp: new Date()
-        });
+        response.answers.push(answerData);
+        console.log('Pushed answerData, response.answers now:', response.answers);
       }
     });
 
@@ -300,13 +327,13 @@ router.get('/questionnaires/:questionnaireId/responses/export', authenticate, as
     const { format = 'json', includeMetadata = true } = req.query;
 
     // Find questionnaire
-    const questionnaire = await Questionnaire.findById(questionnaireId);
+    const questionnaire = await Questionnaire.findById(questionnaireId).populate('creator', '_id');
     if (!questionnaire) {
       return res.status(404).json({ message: 'Questionnaire not found' });
     }
 
     // Check access permissions
-    if (!questionnaire.canUserViewResponses(req.user.userId)) {
+    if (!questionnaire.canUserViewResponses(req.user._id)) {
       return res.status(403).json({ message: 'Access denied' });
     }
 
@@ -362,6 +389,54 @@ router.get('/questionnaires/:questionnaireId/responses/export', authenticate, as
   } catch (error) {
     console.error('Error exporting responses:', error);
     res.status(500).json({ message: 'Failed to export responses' });
+  }
+});
+
+// GET /api/responses/questionnaires/:questionnaireId - Get responses for a questionnaire
+router.get('/questionnaires/:questionnaireId', authenticate, async (req, res) => {
+  try {
+    const { questionnaireId } = req.params;
+    const { page = 1, limit = 10 } = req.query;
+    const skip = (page - 1) * limit;
+
+    // Find questionnaire
+    const questionnaire = await Questionnaire.findById(questionnaireId);
+    if (!questionnaire) {
+      return res.status(404).json({ message: 'Questionnaire not found' });
+    }
+
+    // Check access permissions
+    if (!questionnaire.canUserViewResponses(req.user.userId)) {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
+    // Get responses
+    const responses = await Response.find({
+      questionnaire: questionnaireId,
+      status: 'completed'
+    })
+      .populate('respondent', 'firstName lastName email')
+      .sort({ 'metadata.submittedAt': -1 })
+      .skip(skip)
+      .limit(parseInt(limit));
+
+    const total = await Response.countDocuments({
+      questionnaire: questionnaireId,
+      status: 'completed'
+    });
+
+    res.json({
+      responses,
+      pagination: {
+        page: parseInt(page),
+        limit: parseInt(limit),
+        total,
+        pages: Math.ceil(total / limit)
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching questionnaire responses:', error);
+    res.status(500).json({ message: 'Failed to fetch responses' });
   }
 });
 

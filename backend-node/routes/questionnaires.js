@@ -9,7 +9,43 @@ const { authenticate, authorize } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Apply authentication to all routes
+// Public route for accessing published questionnaires (no auth required)
+router.get('/preview/:id', async (req, res) => {
+  try {
+    const questionnaire = await Questionnaire.findById(req.params.id)
+      .populate('creator', 'firstName lastName');
+
+    if (!questionnaire) {
+      return res.status(404).json({ message: 'Questionnaire not found' });
+    }
+
+    // Only allow access to published questionnaires
+    if (questionnaire.status !== 'published') {
+      return res.status(404).json({ message: 'Questionnaire not found' });
+    }
+
+    // Return questionnaire data for public viewing
+    res.json({
+      _id: questionnaire._id,
+      title: questionnaire.title,
+      description: questionnaire.description,
+      questions: questionnaire.questions.map(q => ({
+        id: q.id,
+        type: q.type,
+        title: q.title,
+        description: q.description,
+        required: q.required,
+        options: q.options,
+        validation: q.validation
+      }))
+    });
+  } catch (error) {
+    console.error('Error fetching public questionnaire:', error);
+    res.status(500).json({ message: 'Failed to fetch questionnaire' });
+  }
+});
+
+// Apply authentication to all routes below
 router.use(authenticate);
 
 // GET /api/questionnaires - List user's questionnaires
@@ -19,7 +55,7 @@ router.get('/', async (req, res) => {
     const skip = (page - 1) * limit;
 
     // Build query
-    const query = { creator: req.user.userId };
+    const query = { creator: req.user._id };
 
     if (status) query.status = status;
     if (workspace) query.workspace = workspace;
@@ -33,14 +69,14 @@ router.get('/', async (req, res) => {
     // Add workspace access for collaborators
     const userWorkspaces = await Workspace.find({
       $or: [
-        { owner: req.user.userId },
-        { 'members.user': req.user.userId }
+        { owner: req.user._id },
+        { 'members.user': req.user._id }
       ]
     }).select('_id');
 
     const workspaceIds = userWorkspaces.map(w => w._id);
     query.$or = [
-      { creator: req.user.userId },
+      { creator: req.user._id },
       { workspace: { $in: workspaceIds } }
     ];
 
@@ -73,13 +109,37 @@ router.post('/', async (req, res) => {
   try {
     const { title, description, category, workspace, questions, settings } = req.body;
 
-    // Validate workspace access
-    if (workspace) {
+    // Find or create default workspace for user
+    let targetWorkspace = workspace;
+    if (!workspace) {
+      // Get user's default workspace
+      const userWorkspace = await Workspace.findOne({ owner: req.user._id });
+      if (userWorkspace) {
+        targetWorkspace = userWorkspace._id;
+      } else {
+        // Create default workspace if none exists
+        const defaultWorkspace = new Workspace({
+          name: 'My Workspace',
+          description: 'Default workspace for your questionnaires',
+          owner: req.user._id,
+          members: [],
+          settings: {
+            defaultQuestionnaireSettings: {
+              allowAnonymous: true,
+              showProgress: true
+            }
+          }
+        });
+        await defaultWorkspace.save();
+        targetWorkspace = defaultWorkspace._id;
+      }
+    } else {
+      // Validate provided workspace access
       const userWorkspace = await Workspace.findOne({
         _id: workspace,
         $or: [
-          { owner: req.user.userId },
-          { 'members.user': req.user.userId, 'members.role': { $in: ['admin', 'editor'] } }
+          { owner: req.user._id },
+          { 'members.user': req.user._id, 'members.role': { $in: ['admin', 'editor'] } }
         ]
       });
 
@@ -92,8 +152,8 @@ router.post('/', async (req, res) => {
       title,
       description,
       category,
-      creator: req.user.userId,
-      workspace,
+      creator: req.user._id,
+      workspace: targetWorkspace,
       questions: questions || [],
       settings: settings || {}
     });
@@ -102,11 +162,15 @@ router.post('/', async (req, res) => {
 
     // Log creation
     await AuditLog.create({
-      user: req.user.userId,
-      action: 'create',
-      resource: 'questionnaire',
-      resourceId: questionnaire._id,
-      details: { title: questionnaire.title }
+      user: req.user._id,
+      userEmail: req.user.email,
+      action: 'questionnaire_create',
+      entityType: 'questionnaire',
+      entityId: questionnaire._id,
+      metadata: {
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent')
+      }
     });
 
     await questionnaire.populate('creator', 'firstName lastName email');
@@ -132,8 +196,8 @@ router.get('/:id', async (req, res) => {
     }
 
     // Check access permissions
-    const hasAccess = questionnaire.creator.toString() === req.user.userId ||
-      questionnaire.collaborators.some(c => c.user._id.toString() === req.user.userId);
+    const hasAccess = questionnaire.creator._id.toString() === req.user._id.toString() ||
+      questionnaire.collaborators.some(c => c.user._id.toString() === req.user._id.toString());
 
     if (!hasAccess && questionnaire.settings.isPublic !== true) {
       return res.status(403).json({ message: 'Access denied' });
@@ -156,7 +220,7 @@ router.put('/:id', async (req, res) => {
     }
 
     // Check edit permissions
-    if (!questionnaire.canUserEdit(req.user.userId)) {
+    if (!questionnaire.canUserEdit(req.user._id)) {
       return res.status(403).json({ message: 'Access denied' });
     }
 
@@ -241,9 +305,9 @@ router.post('/:id/publish', async (req, res) => {
     }
 
     // Check publish permissions
-    const canPublish = questionnaire.creator.toString() === req.user.userId ||
+    const canPublish = questionnaire.creator.toString() === req.user._id.toString() ||
       questionnaire.collaborators.some(c =>
-        c.user.toString() === req.user.userId && c.permissions.canPublish
+        c.user.toString() === req.user._id.toString() && c.permissions.canPublish
       );
 
     if (!canPublish) {
@@ -254,7 +318,7 @@ router.post('/:id/publish', async (req, res) => {
     questionnaire.publishedAt = new Date();
     questionnaire.statusHistory.push({
       status: 'published',
-      changedBy: req.user.userId,
+      changedBy: req.user._id,
       changedAt: new Date()
     });
 
@@ -262,11 +326,15 @@ router.post('/:id/publish', async (req, res) => {
 
     // Log publish
     await AuditLog.create({
-      user: req.user.userId,
-      action: 'publish',
-      resource: 'questionnaire',
-      resourceId: questionnaire._id,
-      details: { title: questionnaire.title }
+      user: req.user._id,
+      userEmail: req.user.email,
+      action: 'questionnaire_publish',
+      entityType: 'questionnaire',
+      entityId: questionnaire._id,
+      metadata: {
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent')
+      }
     });
 
     res.json(questionnaire);

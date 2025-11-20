@@ -398,8 +398,8 @@ router.get('/dashboard', async (req, res) => {
       {
         $match: {
           $or: [
-            { creator: mongoose.Types.ObjectId(req.user.userId) },
-            { collaborators: { $elemMatch: { user: mongoose.Types.ObjectId(req.user.userId) } } }
+            { creator: new mongoose.Types.ObjectId(req.user.userId) },
+            { collaborators: { $elemMatch: { user: new mongoose.Types.ObjectId(req.user.userId) } } }
           ]
         }
       },

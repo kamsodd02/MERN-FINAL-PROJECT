@@ -158,6 +158,23 @@ router.post('/login', async (req, res) => {
     user.loginCount += 1;
     await user.save();
 
+    // Create default workspace for new user
+    const Workspace = require('../models/Workspace');
+    const defaultWorkspace = new Workspace({
+      name: 'My Workspace',
+      description: 'Default workspace for your questionnaires',
+      owner: user._id,
+      members: [],
+      settings: {
+        defaultQuestionnaireSettings: {
+          allowAnonymous: true,
+          showProgress: true
+        }
+      }
+    });
+
+    await defaultWorkspace.save();
+
     // Generate tokens
     const token = generateToken(user._id);
     const refreshToken = generateRefreshToken(user._id);
@@ -206,6 +223,40 @@ router.post('/login', async (req, res) => {
     res.status(500).json({
       error: 'Server Error',
       message: 'Login failed'
+    });
+  }
+});
+
+// @route   GET /api/auth/profile
+// @desc    Get current user profile
+// @access  Private
+router.get('/profile', authenticate, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('-password -passwordResetToken -passwordResetExpires -emailVerificationToken -emailVerificationExpires -refreshTokens');
+    if (!user) {
+      return res.status(404).json({
+        error: 'Not Found',
+        message: 'User not found'
+      });
+    }
+
+    res.json({
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role,
+      avatar: user.avatar,
+      isEmailVerified: user.isEmailVerified,
+      preferences: user.preferences,
+      lastLoginAt: user.lastLoginAt,
+      createdAt: user.createdAt
+    });
+  } catch (error) {
+    console.error('Profile fetch error:', error);
+    res.status(500).json({
+      error: 'Server Error',
+      message: 'Failed to fetch profile'
     });
   }
 });

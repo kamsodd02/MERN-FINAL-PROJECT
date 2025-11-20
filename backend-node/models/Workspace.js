@@ -138,7 +138,7 @@ workspaceSchema.index({ 'subscription.plan': 1, 'subscription.status': 1 });
 
 // Virtual for member count
 workspaceSchema.virtual('memberCount').get(function() {
-  return this.members.length;
+  return this.members ? this.members.length : 0;
 });
 
 // Pre-save middleware to update member count

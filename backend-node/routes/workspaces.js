@@ -49,9 +49,9 @@ router.post('/', async (req, res) => {
     const workspace = new Workspace({
       name,
       description,
-      owner: req.user.userId,
+      owner: req.user._id,
       members: [{
-        user: req.user.userId,
+        user: req.user._id,
         role: 'admin',
         joinedAt: new Date()
       }],
@@ -62,11 +62,15 @@ router.post('/', async (req, res) => {
 
     // Log creation
     await AuditLog.create({
-      user: req.user.userId,
-      action: 'create',
-      resource: 'workspace',
-      resourceId: workspace._id,
-      details: { name: workspace.name }
+      user: req.user._id,
+      userEmail: req.user.email,
+      action: 'workspace_create',
+      entityType: 'workspace',
+      entityId: workspace._id,
+      metadata: {
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent')
+      }
     });
 
     await workspace.populate('owner', 'firstName lastName email');
