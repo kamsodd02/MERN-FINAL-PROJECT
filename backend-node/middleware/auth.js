@@ -26,7 +26,11 @@ const authenticate = async (req, res, next) => {
       token = req.headers.authorization.split(' ')[1];
     }
 
+    console.log('Auth Debug - Token present:', !!token);
+    console.log('Auth Debug - JWT_SECRET set:', !!process.env.JWT_SECRET);
+
     if (!token) {
+      console.log('Auth Debug - No token provided');
       return res.status(401).json({
         error: 'Authentication Error',
         message: 'Access denied. No token provided.'
@@ -35,12 +39,17 @@ const authenticate = async (req, res, next) => {
 
     try {
       // Verify token
+      console.log('Auth Debug - Verifying token...');
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      console.log('Auth Debug - Decoded token:', { userId: decoded.userId, iat: decoded.iat, exp: decoded.exp });
 
       // Get user from token
+      console.log('Auth Debug - Looking up user...');
       const user = await User.findById(decoded.userId).select('-password');
+      console.log('Auth Debug - User found:', !!user);
 
       if (!user) {
+        console.log('Auth Debug - User not found for ID:', decoded.userId);
         return res.status(401).json({
           error: 'Authentication Error',
           message: 'Token is not valid. User not found.'
@@ -48,17 +57,20 @@ const authenticate = async (req, res, next) => {
       }
 
       if (!user.isActive) {
+        console.log('Auth Debug - User not active:', user.email);
         return res.status(401).json({
           error: 'Authentication Error',
           message: 'Account is deactivated.'
         });
       }
 
+      console.log('Auth Debug - Auth successful for user:', user.email);
       // Add user to request
       req.user = user;
       next();
 
     } catch (tokenError) {
+      console.log('Auth Debug - Token verification failed:', tokenError.message);
       return res.status(401).json({
         error: 'Authentication Error',
         message: 'Token is not valid.'
