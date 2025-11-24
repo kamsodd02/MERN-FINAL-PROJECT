@@ -395,14 +395,19 @@ router.post('/:id/clone', async (req, res) => {
 // GET /api/questionnaires/:id/responses - Get questionnaire responses
 router.get('/:id/responses', async (req, res) => {
   try {
+    console.log('Fetching responses for questionnaire:', req.params.id, 'user:', req.user._id);
     const questionnaire = await Questionnaire.findById(req.params.id);
 
     if (!questionnaire) {
+      console.log('Questionnaire not found:', req.params.id);
       return res.status(404).json({ message: 'Questionnaire not found' });
     }
 
     // Check view permissions
-    if (!questionnaire.canUserViewResponses(req.user._id)) {
+    const canView = questionnaire.canUserViewResponses(req.user._id);
+    console.log('Can view responses:', canView, 'creator:', questionnaire.creator, 'user:', req.user._id);
+    if (!canView) {
+      console.log('Access denied for user:', req.user._id);
       return res.status(403).json({ message: 'Access denied' });
     }
 
