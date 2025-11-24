@@ -264,9 +264,9 @@ router.delete('/:id', async (req, res) => {
     }
 
     // Check delete permissions
-    const canDelete = questionnaire.creator.toString() === req.user.userId ||
+    const canDelete = questionnaire.creator.toString() === req.user._id.toString() ||
       questionnaire.collaborators.some(c =>
-        c.user.toString() === req.user.userId && c.permissions.canDelete
+        c.user.toString() === req.user._id.toString() && c.permissions.canDelete
       );
 
     if (!canDelete) {
@@ -354,8 +354,8 @@ router.post('/:id/clone', async (req, res) => {
     }
 
     // Check access permissions
-    const hasAccess = original.creator.toString() === req.user.userId ||
-      original.collaborators.some(c => c.user._id.toString() === req.user.userId);
+    const hasAccess = original.creator.toString() === req.user._id.toString() ||
+      original.collaborators.some(c => c.user._id.toString() === req.user._id.toString());
 
     if (!hasAccess) {
       return res.status(403).json({ message: 'Access denied' });
@@ -365,7 +365,7 @@ router.post('/:id/clone', async (req, res) => {
       title: `${original.title} (Copy)`,
       description: original.description,
       category: original.category,
-      creator: req.user.userId,
+      creator: req.user._id,
       workspace: original.workspace,
       questions: JSON.parse(JSON.stringify(original.questions)), // Deep clone
       settings: JSON.parse(JSON.stringify(original.settings))
@@ -402,7 +402,7 @@ router.get('/:id/responses', async (req, res) => {
     }
 
     // Check view permissions
-    if (!questionnaire.canUserViewResponses(req.user.userId)) {
+    if (!questionnaire.canUserViewResponses(req.user._id)) {
       return res.status(403).json({ message: 'Access denied' });
     }
 
@@ -540,7 +540,7 @@ router.post('/:id/collaborators', async (req, res) => {
     }
 
     // Only creator or workspace admin can add collaborators
-    if (questionnaire.creator.toString() !== req.user.userId) {
+    if (questionnaire.creator.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: 'Access denied' });
     }
 
@@ -566,7 +566,7 @@ router.delete('/:id/collaborators/:userId', async (req, res) => {
     }
 
     // Only creator can remove collaborators
-    if (questionnaire.creator.toString() !== req.user.userId) {
+    if (questionnaire.creator.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: 'Access denied' });
     }
 
