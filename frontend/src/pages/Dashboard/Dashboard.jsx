@@ -51,21 +51,26 @@ const Dashboard = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 rounded-2xl p-8 text-white shadow-large">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
-        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+      <div className="relative overflow-hidden bg-gradient-to-r from-primary-500 via-secondary-500 to-accent-500 rounded-3xl p-10 text-white shadow-large animate-fade-in">
+        <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/20"></div>
+        <div className="absolute -top-20 -right-20 w-48 h-48 bg-white/15 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-white/15 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-bounce-subtle"></div>
         <div className="relative z-10">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
             <div>
-              <h1 className="text-4xl font-bold mb-3">Welcome back! 👋</h1>
-              <p className="text-xl text-primary-100">Here's what's happening with your questionnaires today.</p>
+              <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-white to-primary-100 bg-clip-text text-transparent">
+                Welcome back! 👋
+              </h1>
+              <p className="text-xl text-white/90 leading-relaxed">
+                Here's what's happening with your questionnaires today.
+              </p>
             </div>
             <Link
               to="/questionnaires/new"
-              className="inline-flex items-center px-8 py-4 border border-transparent text-base font-semibold rounded-xl text-primary-700 bg-white hover:bg-primary-50 shadow-soft hover:shadow-medium transition-all duration-300 group"
+              className="inline-flex items-center px-10 py-5 border-2 border-white/30 text-lg font-bold rounded-2xl text-white bg-white/20 backdrop-blur-sm hover:bg-white/30 hover:border-white/50 shadow-large hover:shadow-glow transition-all duration-300 group"
             >
-              <PlusCircle className="mr-3 h-6 w-6 group-hover:rotate-90 transition-transform duration-300" />
+              <PlusCircle className="mr-3 h-7 w-7 group-hover:rotate-90 transition-transform duration-300" />
               Create New Questionnaire
             </Link>
           </div>
@@ -74,73 +79,85 @@ const Dashboard = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-        <div className="relative overflow-hidden bg-gradient-to-br from-primary-500 to-primary-600 p-8 rounded-2xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer">
-          <div className="absolute inset-0 bg-white/10 group-hover:bg-white/20 transition-colors duration-300"></div>
-          <div className="absolute -top-6 -right-6 w-20 h-20 bg-white/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 p-8 rounded-3xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent group-hover:from-white/20 group-hover:to-white/5 transition-all duration-300"></div>
+          <div className="absolute -top-8 -right-8 w-24 h-24 bg-white/25 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 animate-pulse"></div>
+          <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-primary-300/30 rounded-full blur-xl animate-bounce-subtle"></div>
           <div className="relative z-10">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-4 bg-white/20 backdrop-blur-sm rounded-xl">
-                <FileText className="h-8 w-8 text-white" />
+            <div className="flex items-center justify-between mb-6">
+              <div className="p-4 bg-white/25 backdrop-blur-sm rounded-2xl shadow-soft">
+                <FileText className="h-8 w-8 text-white drop-shadow-lg" />
               </div>
-              <TrendingUp className="h-5 w-5 text-primary-200" />
+              <div className="p-2 bg-white/20 rounded-xl">
+                <TrendingUp className="h-5 w-5 text-primary-100" />
+              </div>
             </div>
             <div>
-              <p className="text-primary-100 text-sm font-medium mb-1">Total Questionnaires</p>
-              <p className="text-4xl font-bold text-white">{stats.totalQuestionnaires || 0}</p>
+              <p className="text-primary-100 text-sm font-semibold mb-2 uppercase tracking-wide">Total Questionnaires</p>
+              <p className="text-5xl font-black text-white drop-shadow-lg">{stats.totalQuestionnaires || 0}</p>
             </div>
           </div>
         </div>
 
-        <div className="relative overflow-hidden bg-gradient-to-br from-secondary-500 to-secondary-600 p-8 rounded-2xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer" style={{animationDelay: '0.1s'}}>
-          <div className="absolute inset-0 bg-white/10 group-hover:bg-white/20 transition-colors duration-300"></div>
-          <div className="absolute -top-6 -right-6 w-20 h-20 bg-white/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+        <div className="relative overflow-hidden bg-gradient-to-br from-secondary-500 via-secondary-600 to-secondary-700 p-8 rounded-3xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer" style={{animationDelay: '0.1s'}}>
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent group-hover:from-white/20 group-hover:to-white/5 transition-all duration-300"></div>
+          <div className="absolute -top-8 -right-8 w-24 h-24 bg-white/25 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 animate-pulse" style={{animationDelay: '1s'}}></div>
+          <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-secondary-300/30 rounded-full blur-xl animate-bounce-subtle" style={{animationDelay: '0.5s'}}></div>
           <div className="relative z-10">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-4 bg-white/20 backdrop-blur-sm rounded-xl">
-                <CheckCircle className="h-8 w-8 text-white" />
+            <div className="flex items-center justify-between mb-6">
+              <div className="p-4 bg-white/25 backdrop-blur-sm rounded-2xl shadow-soft">
+                <CheckCircle className="h-8 w-8 text-white drop-shadow-lg" />
               </div>
-              <TrendingUp className="h-5 w-5 text-secondary-200" />
+              <div className="p-2 bg-white/20 rounded-xl">
+                <TrendingUp className="h-5 w-5 text-secondary-100" />
+              </div>
             </div>
             <div>
-              <p className="text-secondary-100 text-sm font-medium mb-1">Total Responses</p>
-              <p className="text-4xl font-bold text-white">{stats.totalResponses || 0}</p>
+              <p className="text-secondary-100 text-sm font-semibold mb-2 uppercase tracking-wide">Total Responses</p>
+              <p className="text-5xl font-black text-white drop-shadow-lg">{stats.totalResponses || 0}</p>
             </div>
           </div>
         </div>
 
-        <div className="relative overflow-hidden bg-gradient-to-br from-accent-500 to-accent-600 p-8 rounded-2xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer" style={{animationDelay: '0.2s'}}>
-          <div className="absolute inset-0 bg-white/10 group-hover:bg-white/20 transition-colors duration-300"></div>
-          <div className="absolute -top-6 -right-6 w-20 h-20 bg-white/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+        <div className="relative overflow-hidden bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 p-8 rounded-3xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer" style={{animationDelay: '0.2s'}}>
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent group-hover:from-white/20 group-hover:to-white/5 transition-all duration-300"></div>
+          <div className="absolute -top-8 -right-8 w-24 h-24 bg-white/25 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 animate-pulse" style={{animationDelay: '2s'}}></div>
+          <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-accent-300/30 rounded-full blur-xl animate-bounce-subtle" style={{animationDelay: '1s'}}></div>
           <div className="relative z-10">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-4 bg-white/20 backdrop-blur-sm rounded-xl">
-                <TrendingUp className="h-8 w-8 text-white" />
+            <div className="flex items-center justify-between mb-6">
+              <div className="p-4 bg-white/25 backdrop-blur-sm rounded-2xl shadow-soft">
+                <TrendingUp className="h-8 w-8 text-white drop-shadow-lg" />
               </div>
-              <TrendingUp className="h-5 w-5 text-accent-200" />
+              <div className="p-2 bg-white/20 rounded-xl">
+                <TrendingUp className="h-5 w-5 text-accent-100" />
+              </div>
             </div>
             <div>
-              <p className="text-accent-100 text-sm font-medium mb-1">Completion Rate</p>
-              <p className="text-4xl font-bold text-white">
+              <p className="text-accent-100 text-sm font-semibold mb-2 uppercase tracking-wide">Completion Rate</p>
+              <p className="text-5xl font-black text-white drop-shadow-lg">
                 {stats.completionRate ? `${stats.completionRate.toFixed(1)}%` : '0%'}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="relative overflow-hidden bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 p-8 rounded-2xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer" style={{animationDelay: '0.3s'}}>
-          <div className="absolute inset-0 bg-white/10 group-hover:bg-white/20 transition-colors duration-300"></div>
-          <div className="absolute -top-6 -right-6 w-20 h-20 bg-white/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 p-8 rounded-3xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer" style={{animationDelay: '0.3s'}}>
+          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent group-hover:from-white/20 group-hover:to-white/5 transition-all duration-300"></div>
+          <div className="absolute -top-8 -right-8 w-24 h-24 bg-white/25 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 animate-pulse" style={{animationDelay: '3s'}}></div>
+          <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-primary-300/30 rounded-full blur-xl animate-bounce-subtle" style={{animationDelay: '1.5s'}}></div>
           <div className="relative z-10">
-            <div className="flex items-center justify-between mb-4">
-              <div className="p-4 bg-white/20 backdrop-blur-sm rounded-xl">
-                <Clock className="h-8 w-8 text-white" />
+            <div className="flex items-center justify-between mb-6">
+              <div className="p-4 bg-white/25 backdrop-blur-sm rounded-2xl shadow-soft">
+                <Clock className="h-8 w-8 text-white drop-shadow-lg" />
               </div>
-              <TrendingUp className="h-5 w-5 text-primary-200" />
+              <div className="p-2 bg-white/20 rounded-xl">
+                <TrendingUp className="h-5 w-5 text-primary-100" />
+              </div>
             </div>
             <div>
-              <p className="text-primary-100 text-sm font-medium mb-1">Recent Activity</p>
-              <p className="text-4xl font-bold text-white">{analytics?.recentActivity?.responses || 0}</p>
-              <p className="text-xs text-primary-200 mt-1">last 7 days</p>
+              <p className="text-primary-100 text-sm font-semibold mb-2 uppercase tracking-wide">Recent Activity</p>
+              <p className="text-5xl font-black text-white drop-shadow-lg">{analytics?.recentActivity?.responses || 0}</p>
+              <p className="text-sm text-primary-200 mt-2 font-medium">last 7 days</p>
             </div>
           </div>
         </div>

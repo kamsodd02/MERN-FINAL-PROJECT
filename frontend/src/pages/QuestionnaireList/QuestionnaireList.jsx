@@ -24,21 +24,26 @@ const QuestionnaireList = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-secondary-500 via-accent-500 to-primary-500 rounded-2xl p-8 text-white shadow-large">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
-        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+      <div className="relative overflow-hidden bg-gradient-to-r from-secondary-500 via-accent-500 to-primary-500 rounded-3xl p-10 text-white shadow-large animate-fade-in">
+        <div className="absolute inset-0 bg-gradient-to-r from-black/15 via-transparent to-black/15"></div>
+        <div className="absolute -top-24 -right-24 w-48 h-48 bg-white/15 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-white/15 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-36 h-36 bg-white/10 rounded-full blur-2xl animate-bounce-subtle"></div>
         <div className="relative z-10">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
             <div>
-              <h1 className="text-4xl font-bold mb-3">Your Questionnaires 📋</h1>
-              <p className="text-xl text-secondary-100">Create, manage, and analyze all your forms in one place.</p>
+              <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-white to-secondary-100 bg-clip-text text-transparent">
+                Your Questionnaires 📋
+              </h1>
+              <p className="text-xl text-white/90 leading-relaxed">
+                Create, manage, and analyze all your forms in one beautiful place.
+              </p>
             </div>
             <Link
               to="/questionnaires/new"
-              className="inline-flex items-center px-8 py-4 border border-transparent text-base font-semibold rounded-xl text-secondary-700 bg-white hover:bg-secondary-50 shadow-soft hover:shadow-medium transition-all duration-300 group"
+              className="inline-flex items-center px-10 py-5 border-2 border-white/30 text-lg font-bold rounded-2xl text-white bg-white/20 backdrop-blur-sm hover:bg-white/30 hover:border-white/50 shadow-large hover:shadow-glow transition-all duration-300 group"
             >
-              <PlusCircle className="mr-3 h-6 w-6 group-hover:rotate-90 transition-transform duration-300" />
+              <PlusCircle className="mr-3 h-7 w-7 group-hover:rotate-90 transition-transform duration-300" />
               Create New Questionnaire
             </Link>
           </div>
@@ -46,22 +51,24 @@ const QuestionnaireList = () => {
       </div>
 
       {/* Search and Filters */}
-      <div className="bg-white p-8 rounded-2xl shadow-large border border-neutral-200 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-50/50 to-secondary-50/50"></div>
+      <div className="bg-white p-10 rounded-3xl shadow-large border border-neutral-200 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-50/60 via-secondary-50/40 to-accent-50/60"></div>
+        <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-primary-200/30 to-secondary-200/30 rounded-full blur-2xl"></div>
+        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-br from-accent-200/30 to-primary-200/30 rounded-full blur-2xl"></div>
         <div className="relative z-10">
-          <div className="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-6">
+          <div className="flex flex-col sm:flex-row space-y-8 sm:space-y-0 sm:space-x-8">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-4 top-4 h-6 w-6 text-neutral-400" />
+                <Search className="absolute left-5 top-5 h-7 w-7 text-neutral-400" />
                 <input
                   type="text"
                   placeholder="Search your questionnaires..."
-                  className="w-full pl-14 pr-6 py-4 text-lg border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-300 shadow-soft focus:shadow-medium bg-white/80 backdrop-blur-sm"
+                  className="w-full pl-16 pr-8 py-5 text-xl border-2 border-neutral-300 rounded-2xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-300 shadow-soft focus:shadow-medium bg-white/90 backdrop-blur-sm"
                 />
               </div>
             </div>
-            <button className="inline-flex items-center px-8 py-4 border border-neutral-300 rounded-xl text-base font-semibold text-neutral-700 bg-white hover:bg-neutral-50 shadow-soft hover:shadow-medium transition-all duration-300 hover:scale-105">
-              <Filter className="mr-3 h-6 w-6" />
+            <button className="inline-flex items-center px-10 py-5 border-2 border-neutral-300 rounded-2xl text-lg font-semibold text-neutral-700 bg-white hover:bg-neutral-50 shadow-soft hover:shadow-medium transition-all duration-300 hover:scale-105 group">
+              <Filter className="mr-3 h-7 w-7 group-hover:rotate-12 transition-transform duration-300" />
               Advanced Filters
             </button>
           </div>
