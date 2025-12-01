@@ -6,11 +6,12 @@ import {
   BarChart3,
   Settings,
   PlusCircle,
-  FolderOpen
+  FolderOpen,
+  X
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
-const Sidebar = () => {
+const Sidebar = ({ isMobileOpen, onClose }) => {
   const { user } = useAuth();
 
   const navigation = [
@@ -22,9 +23,33 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="hidden md:flex md:w-64 md:flex-col">
-      <div className="flex flex-col flex-grow pt-5 bg-white overflow-y-auto border-r border-gray-200">
-        <div className="flex items-center flex-shrink-0 px-4 mb-8">
+    <>
+      {/* Mobile overlay */}
+      {isMobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden"
+          onClick={onClose}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div className={`
+        fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-large transform transition-transform duration-300 ease-in-out
+        md:relative md:translate-x-0 md:shadow-none md:border-r md:border-neutral-200
+        ${isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}>
+        {/* Close button for mobile */}
+        <div className="flex justify-end p-4 md:hidden">
+          <button
+            onClick={onClose}
+            className="p-2 rounded-md text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 transition-colors"
+          >
+            <X className="h-6 w-6" />
+          </button>
+        </div>
+
+        <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-gradient-to-b from-primary-50 to-white">
+          <div className="flex items-center flex-shrink-0 px-4 mb-8">
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <FileText className="h-8 w-8 text-blue-600" />
@@ -89,8 +114,9 @@ const Sidebar = () => {
             </div>
           </div>
         </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

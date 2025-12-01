@@ -37,7 +37,10 @@ const Dashboard = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="relative">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary-200 border-t-primary-600"></div>
+          <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-secondary-500 animate-spin" style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
+        </div>
       </div>
     );
   }
@@ -48,88 +51,88 @@ const Dashboard = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600">Welcome back! Here's what's happening with your questionnaires.</p>
+          <h1 className="text-3xl font-bold text-neutral-900 mb-2">Dashboard</h1>
+          <p className="text-neutral-600 text-lg">Welcome back! Here's what's happening with your questionnaires.</p>
         </div>
         <Link
           to="/questionnaires/new"
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+          className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 shadow-soft hover:shadow-medium transition-all duration-300"
         >
-          <PlusCircle className="mr-2 h-4 w-4" />
+          <PlusCircle className="mr-2 h-5 w-5" />
           New Questionnaire
         </Link>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-soft border border-neutral-200 hover:shadow-medium transition-all duration-300 animate-fade-in">
           <div className="flex items-center">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <FileText className="h-6 w-6 text-blue-600" />
+            <div className="p-3 bg-gradient-to-br from-primary-100 to-primary-200 rounded-xl shadow-soft">
+              <FileText className="h-7 w-7 text-primary-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Questionnaires</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalQuestionnaires || 0}</p>
+              <p className="text-sm font-medium text-neutral-600">Total Questionnaires</p>
+              <p className="text-3xl font-bold text-neutral-900">{stats.totalQuestionnaires || 0}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-soft border border-neutral-200 hover:shadow-medium transition-all duration-300 animate-fade-in" style={{animationDelay: '0.1s'}}>
           <div className="flex items-center">
-            <div className="p-2 bg-green-100 rounded-lg">
-              <CheckCircle className="h-6 w-6 text-green-600" />
+            <div className="p-3 bg-gradient-to-br from-secondary-100 to-secondary-200 rounded-xl shadow-soft">
+              <CheckCircle className="h-7 w-7 text-secondary-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Responses</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalResponses || 0}</p>
+              <p className="text-sm font-medium text-neutral-600">Total Responses</p>
+              <p className="text-3xl font-bold text-neutral-900">{stats.totalResponses || 0}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-soft border border-neutral-200 hover:shadow-medium transition-all duration-300 animate-fade-in" style={{animationDelay: '0.2s'}}>
           <div className="flex items-center">
-            <div className="p-2 bg-yellow-100 rounded-lg">
-              <TrendingUp className="h-6 w-6 text-yellow-600" />
+            <div className="p-3 bg-gradient-to-br from-accent-100 to-accent-200 rounded-xl shadow-soft">
+              <TrendingUp className="h-7 w-7 text-accent-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Completion Rate</p>
-              <p className="text-2xl font-bold text-gray-900">
+              <p className="text-sm font-medium text-neutral-600">Completion Rate</p>
+              <p className="text-3xl font-bold text-neutral-900">
                 {stats.completionRate ? `${stats.completionRate.toFixed(1)}%` : '0%'}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-white p-6 rounded-xl shadow-soft border border-neutral-200 hover:shadow-medium transition-all duration-300 animate-fade-in" style={{animationDelay: '0.3s'}}>
           <div className="flex items-center">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <Clock className="h-6 w-6 text-purple-600" />
+            <div className="p-3 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl shadow-soft">
+              <Clock className="h-7 w-7 text-primary-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Recent Activity</p>
-              <p className="text-2xl font-bold text-gray-900">{analytics?.recentActivity?.responses || 0}</p>
-              <p className="text-xs text-gray-500">last 7 days</p>
+              <p className="text-sm font-medium text-neutral-600">Recent Activity</p>
+              <p className="text-3xl font-bold text-neutral-900">{analytics?.recentActivity?.responses || 0}</p>
+              <p className="text-xs text-neutral-500">last 7 days</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Recent Questionnaires */}
-      <div className="bg-white shadow-sm rounded-lg border border-gray-200">
-        <div className="px-6 py-4 border-b border-gray-200">
+      <div className="bg-white shadow-soft rounded-xl border border-neutral-200 overflow-hidden">
+        <div className="px-6 py-5 border-b border-neutral-200 bg-gradient-to-r from-neutral-50 to-white">
           <div className="flex justify-between items-center">
-            <h2 className="text-lg font-medium text-gray-900">Recent Questionnaires</h2>
+            <h2 className="text-xl font-semibold text-neutral-900">Recent Questionnaires</h2>
             <Link
               to="/questionnaires"
-              className="text-sm text-blue-600 hover:text-blue-500"
+              className="text-sm font-medium text-primary-600 hover:text-primary-700 transition-colors"
             >
-              View all
+              View all →
             </Link>
           </div>
         </div>
-        <div className="divide-y divide-gray-200">
+        <div className="divide-y divide-neutral-100">
           {recentQuestionnaires.length > 0 ? (
             recentQuestionnaires.map((questionnaire) => (
               <div key={questionnaire._id} className="px-6 py-4">
@@ -166,63 +169,69 @@ const Dashboard = () => {
               </div>
             ))
           ) : (
-            <div className="px-6 py-8 text-center">
-              <FileText className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No questionnaires</h3>
-              <p className="mt-1 text-sm text-gray-500">
-                Get started by creating your first questionnaire.
-              </p>
-              <div className="mt-6">
-                <Link
-                  to="/questionnaires/new"
-                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
-                >
-                  <PlusCircle className="mr-2 h-4 w-4" />
-                  Create Questionnaire
-                </Link>
+            <div className="px-6 py-12 text-center">
+              <div className="mx-auto w-24 h-24 bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-full flex items-center justify-center mb-4">
+                <FileText className="h-12 w-12 text-neutral-400" />
               </div>
+              <h3 className="text-lg font-semibold text-neutral-900 mb-2">No questionnaires yet</h3>
+              <p className="text-neutral-600 mb-6 max-w-sm mx-auto">
+                Get started by creating your first questionnaire. It's easy and takes just a few minutes.
+              </p>
+              <Link
+                to="/questionnaires/new"
+                className="inline-flex items-center px-6 py-3 border border-transparent shadow-soft text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 hover:shadow-medium transition-all duration-300"
+              >
+                <PlusCircle className="mr-2 h-5 w-5" />
+                Create Your First Questionnaire
+              </Link>
             </div>
           )}
         </div>
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white shadow-sm rounded-lg border border-gray-200">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-medium text-gray-900">Quick Actions</h2>
+      <div className="bg-white shadow-soft rounded-xl border border-neutral-200 overflow-hidden">
+        <div className="px-6 py-5 border-b border-neutral-200 bg-gradient-to-r from-neutral-50 to-white">
+          <h2 className="text-xl font-semibold text-neutral-900">Quick Actions</h2>
         </div>
-        <div className="px-6 py-4">
+        <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Link
               to="/questionnaires/new"
-              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50"
+              className="group flex items-center p-5 border border-neutral-200 rounded-xl hover:border-primary-300 hover:bg-gradient-to-br hover:from-primary-50 hover:to-primary-100 transition-all duration-300 shadow-soft hover:shadow-medium"
             >
-              <PlusCircle className="h-8 w-8 text-blue-600 mr-3" />
+              <div className="p-3 bg-gradient-to-br from-primary-100 to-primary-200 rounded-xl mr-4 group-hover:scale-110 transition-transform duration-300">
+                <PlusCircle className="h-6 w-6 text-primary-600" />
+              </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-900">Create Questionnaire</h3>
-                <p className="text-sm text-gray-500">Start building a new form</p>
+                <h3 className="text-base font-semibold text-neutral-900">Create Questionnaire</h3>
+                <p className="text-sm text-neutral-600">Start building a new form</p>
               </div>
             </Link>
 
             <Link
               to="/workspaces"
-              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50"
+              className="group flex items-center p-5 border border-neutral-200 rounded-xl hover:border-secondary-300 hover:bg-gradient-to-br hover:from-secondary-50 hover:to-secondary-100 transition-all duration-300 shadow-soft hover:shadow-medium"
             >
-              <Users className="h-8 w-8 text-green-600 mr-3" />
+              <div className="p-3 bg-gradient-to-br from-secondary-100 to-secondary-200 rounded-xl mr-4 group-hover:scale-110 transition-transform duration-300">
+                <Users className="h-6 w-6 text-secondary-600" />
+              </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-900">Manage Workspaces</h3>
-                <p className="text-sm text-gray-500">Collaborate with your team</p>
+                <h3 className="text-base font-semibold text-neutral-900">Manage Workspaces</h3>
+                <p className="text-sm text-neutral-600">Collaborate with your team</p>
               </div>
             </Link>
 
             <Link
               to="/analytics"
-              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50"
+              className="group flex items-center p-5 border border-neutral-200 rounded-xl hover:border-accent-300 hover:bg-gradient-to-br hover:from-accent-50 hover:to-accent-100 transition-all duration-300 shadow-soft hover:shadow-medium"
             >
-              <BarChart3 className="h-8 w-8 text-purple-600 mr-3" />
+              <div className="p-3 bg-gradient-to-br from-accent-100 to-accent-200 rounded-xl mr-4 group-hover:scale-110 transition-transform duration-300">
+                <BarChart3 className="h-6 w-6 text-accent-600" />
+              </div>
               <div>
-                <h3 className="text-sm font-medium text-gray-900">View Analytics</h3>
-                <p className="text-sm text-gray-500">Analyze your responses</p>
+                <h3 className="text-base font-semibold text-neutral-900">View Analytics</h3>
+                <p className="text-sm text-neutral-600">Analyze your responses</p>
               </div>
             </Link>
           </div>
