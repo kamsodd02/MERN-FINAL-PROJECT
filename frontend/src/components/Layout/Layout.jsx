@@ -40,8 +40,8 @@ const Layout = () => {
       />
       <div className="flex-1 flex flex-col overflow-hidden relative z-10">
         <Header onMenuClick={toggleMobileSidebar} />
-        <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 xl:p-12">
-          <div className="max-w-5xl mx-auto w-full">
+        <main className="flex-1 overflow-y-auto p-2 md:p-4 lg:p-6 xl:p-8">
+          <div className="w-full">
             <Outlet />
           </div>
         </main>

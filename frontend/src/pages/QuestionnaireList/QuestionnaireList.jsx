@@ -56,7 +56,7 @@ const QuestionnaireList = () => {
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-primary-200/30 to-secondary-200/30 rounded-full blur-2xl"></div>
         <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-br from-accent-200/30 to-primary-200/30 rounded-full blur-2xl"></div>
         <div className="relative z-10">
-          <div className="flex flex-col sm:flex-row space-y-8 sm:space-y-0 sm:space-x-8">
+          <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8">
             <div className="flex-1">
               <div className="relative">
                 <Search className="absolute left-5 top-5 h-7 w-7 text-neutral-400" />

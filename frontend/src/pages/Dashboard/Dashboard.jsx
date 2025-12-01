@@ -78,7 +78,7 @@ const Dashboard = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 lg:gap-8">
         <div className="relative overflow-hidden bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 p-8 rounded-3xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer">
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent group-hover:from-white/20 group-hover:to-white/5 transition-all duration-300"></div>
           <div className="absolute -top-8 -right-8 w-24 h-24 bg-white/25 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 animate-pulse"></div>
