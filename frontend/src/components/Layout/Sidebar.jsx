@@ -35,8 +35,8 @@ const Sidebar = ({ isMobileOpen, onClose }) => {
       {/* Sidebar */}
       <div className={`
         fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-large transform transition-transform duration-300 ease-in-out
-        md:relative md:translate-x-0 md:shadow-none md:border-r md:border-neutral-200
-        ${isMobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        md:fixed md:top-0 md:left-0 md:h-full md:border-r md:border-neutral-200
+        ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         {/* Close button for mobile */}
         <div className="flex justify-end p-4 md:hidden">

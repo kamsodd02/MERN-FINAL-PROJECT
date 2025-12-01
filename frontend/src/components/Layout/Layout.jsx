@@ -15,7 +15,7 @@ const Layout = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 relative overflow-hidden">
+    <div className="h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 relative overflow-hidden">
       {/* More vibrant and colorful background decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Large colorful orbs with more vibrant colors */}
@@ -38,10 +38,12 @@ const Layout = () => {
         isMobileOpen={isMobileSidebarOpen}
         onClose={closeMobileSidebar}
       />
-      <div className="flex-1 flex flex-col overflow-hidden relative z-10">
+
+      {/* Main content area - full screen width */}
+      <div className="flex flex-col h-full relative z-10 md:ml-64">
         <Header onMenuClick={toggleMobileSidebar} />
-        <main className="flex-1 overflow-y-auto p-2 md:p-4 lg:p-6 xl:p-8">
-          <div className="w-full">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+          <div className="w-full min-h-full">
             <Outlet />
           </div>
         </main>
