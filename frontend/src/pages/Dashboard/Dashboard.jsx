@@ -49,71 +49,98 @@ const Dashboard = () => {
   const recentQuestionnaires = questionnaires.slice(0, 5);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-neutral-900 mb-2">Dashboard</h1>
-          <p className="text-neutral-600 text-lg">Welcome back! Here's what's happening with your questionnaires.</p>
+      <div className="relative overflow-hidden bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 rounded-2xl p-8 text-white shadow-large">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+        <div className="relative z-10">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+            <div>
+              <h1 className="text-4xl font-bold mb-3">Welcome back! 👋</h1>
+              <p className="text-xl text-primary-100">Here's what's happening with your questionnaires today.</p>
+            </div>
+            <Link
+              to="/questionnaires/new"
+              className="inline-flex items-center px-8 py-4 border border-transparent text-base font-semibold rounded-xl text-primary-700 bg-white hover:bg-primary-50 shadow-soft hover:shadow-medium transition-all duration-300 group"
+            >
+              <PlusCircle className="mr-3 h-6 w-6 group-hover:rotate-90 transition-transform duration-300" />
+              Create New Questionnaire
+            </Link>
+          </div>
         </div>
-        <Link
-          to="/questionnaires/new"
-          className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 shadow-soft hover:shadow-medium transition-all duration-300"
-        >
-          <PlusCircle className="mr-2 h-5 w-5" />
-          New Questionnaire
-        </Link>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-soft border border-neutral-200 hover:shadow-medium transition-all duration-300 animate-fade-in">
-          <div className="flex items-center">
-            <div className="p-3 bg-gradient-to-br from-primary-100 to-primary-200 rounded-xl shadow-soft">
-              <FileText className="h-7 w-7 text-primary-600" />
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary-500 to-primary-600 p-8 rounded-2xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer">
+          <div className="absolute inset-0 bg-white/10 group-hover:bg-white/20 transition-colors duration-300"></div>
+          <div className="absolute -top-6 -right-6 w-20 h-20 bg-white/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-4 bg-white/20 backdrop-blur-sm rounded-xl">
+                <FileText className="h-8 w-8 text-white" />
+              </div>
+              <TrendingUp className="h-5 w-5 text-primary-200" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-neutral-600">Total Questionnaires</p>
-              <p className="text-3xl font-bold text-neutral-900">{stats.totalQuestionnaires || 0}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-xl shadow-soft border border-neutral-200 hover:shadow-medium transition-all duration-300 animate-fade-in" style={{animationDelay: '0.1s'}}>
-          <div className="flex items-center">
-            <div className="p-3 bg-gradient-to-br from-secondary-100 to-secondary-200 rounded-xl shadow-soft">
-              <CheckCircle className="h-7 w-7 text-secondary-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-neutral-600">Total Responses</p>
-              <p className="text-3xl font-bold text-neutral-900">{stats.totalResponses || 0}</p>
+            <div>
+              <p className="text-primary-100 text-sm font-medium mb-1">Total Questionnaires</p>
+              <p className="text-4xl font-bold text-white">{stats.totalQuestionnaires || 0}</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-soft border border-neutral-200 hover:shadow-medium transition-all duration-300 animate-fade-in" style={{animationDelay: '0.2s'}}>
-          <div className="flex items-center">
-            <div className="p-3 bg-gradient-to-br from-accent-100 to-accent-200 rounded-xl shadow-soft">
-              <TrendingUp className="h-7 w-7 text-accent-600" />
+        <div className="relative overflow-hidden bg-gradient-to-br from-secondary-500 to-secondary-600 p-8 rounded-2xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer" style={{animationDelay: '0.1s'}}>
+          <div className="absolute inset-0 bg-white/10 group-hover:bg-white/20 transition-colors duration-300"></div>
+          <div className="absolute -top-6 -right-6 w-20 h-20 bg-white/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-4 bg-white/20 backdrop-blur-sm rounded-xl">
+                <CheckCircle className="h-8 w-8 text-white" />
+              </div>
+              <TrendingUp className="h-5 w-5 text-secondary-200" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-neutral-600">Completion Rate</p>
-              <p className="text-3xl font-bold text-neutral-900">
+            <div>
+              <p className="text-secondary-100 text-sm font-medium mb-1">Total Responses</p>
+              <p className="text-4xl font-bold text-white">{stats.totalResponses || 0}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative overflow-hidden bg-gradient-to-br from-accent-500 to-accent-600 p-8 rounded-2xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer" style={{animationDelay: '0.2s'}}>
+          <div className="absolute inset-0 bg-white/10 group-hover:bg-white/20 transition-colors duration-300"></div>
+          <div className="absolute -top-6 -right-6 w-20 h-20 bg-white/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-4 bg-white/20 backdrop-blur-sm rounded-xl">
+                <TrendingUp className="h-8 w-8 text-white" />
+              </div>
+              <TrendingUp className="h-5 w-5 text-accent-200" />
+            </div>
+            <div>
+              <p className="text-accent-100 text-sm font-medium mb-1">Completion Rate</p>
+              <p className="text-4xl font-bold text-white">
                 {stats.completionRate ? `${stats.completionRate.toFixed(1)}%` : '0%'}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-soft border border-neutral-200 hover:shadow-medium transition-all duration-300 animate-fade-in" style={{animationDelay: '0.3s'}}>
-          <div className="flex items-center">
-            <div className="p-3 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-xl shadow-soft">
-              <Clock className="h-7 w-7 text-primary-600" />
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 p-8 rounded-2xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer" style={{animationDelay: '0.3s'}}>
+          <div className="absolute inset-0 bg-white/10 group-hover:bg-white/20 transition-colors duration-300"></div>
+          <div className="absolute -top-6 -right-6 w-20 h-20 bg-white/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500"></div>
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-4">
+              <div className="p-4 bg-white/20 backdrop-blur-sm rounded-xl">
+                <Clock className="h-8 w-8 text-white" />
+              </div>
+              <TrendingUp className="h-5 w-5 text-primary-200" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-neutral-600">Recent Activity</p>
-              <p className="text-3xl font-bold text-neutral-900">{analytics?.recentActivity?.responses || 0}</p>
-              <p className="text-xs text-neutral-500">last 7 days</p>
+            <div>
+              <p className="text-primary-100 text-sm font-medium mb-1">Recent Activity</p>
+              <p className="text-4xl font-bold text-white">{analytics?.recentActivity?.responses || 0}</p>
+              <p className="text-xs text-primary-200 mt-1">last 7 days</p>
             </div>
           </div>
         </div>

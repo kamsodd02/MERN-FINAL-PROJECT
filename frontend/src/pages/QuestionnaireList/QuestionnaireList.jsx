@@ -22,82 +22,125 @@ const QuestionnaireList = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-neutral-900">Questionnaires</h1>
-          <p className="text-neutral-600 text-lg">Manage your questionnaires and forms</p>
+      <div className="relative overflow-hidden bg-gradient-to-r from-secondary-500 via-accent-500 to-primary-500 rounded-2xl p-8 text-white shadow-large">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="absolute -top-20 -right-20 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+        <div className="relative z-10">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+            <div>
+              <h1 className="text-4xl font-bold mb-3">Your Questionnaires 📋</h1>
+              <p className="text-xl text-secondary-100">Create, manage, and analyze all your forms in one place.</p>
+            </div>
+            <Link
+              to="/questionnaires/new"
+              className="inline-flex items-center px-8 py-4 border border-transparent text-base font-semibold rounded-xl text-secondary-700 bg-white hover:bg-secondary-50 shadow-soft hover:shadow-medium transition-all duration-300 group"
+            >
+              <PlusCircle className="mr-3 h-6 w-6 group-hover:rotate-90 transition-transform duration-300" />
+              Create New Questionnaire
+            </Link>
+          </div>
         </div>
-        <Link
-          to="/questionnaires/new"
-          className="inline-flex items-center px-6 py-3 border border-transparent text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 shadow-soft hover:shadow-medium transition-all duration-300"
-        >
-          <PlusCircle className="mr-2 h-5 w-5" />
-          New Questionnaire
-        </Link>
       </div>
 
       {/* Search and Filters */}
-      <div className="bg-white p-6 rounded-xl shadow-soft border border-neutral-200">
-        <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-          <div className="flex-1">
-            <div className="relative">
-              <Search className="absolute left-3 top-3.5 h-5 w-5 text-neutral-400" />
-              <input
-                type="text"
-                placeholder="Search questionnaires..."
-                className="w-full pl-12 pr-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium"
-              />
+      <div className="bg-white p-8 rounded-2xl shadow-large border border-neutral-200 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-50/50 to-secondary-50/50"></div>
+        <div className="relative z-10">
+          <div className="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-6">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-4 top-4 h-6 w-6 text-neutral-400" />
+                <input
+                  type="text"
+                  placeholder="Search your questionnaires..."
+                  className="w-full pl-14 pr-6 py-4 text-lg border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-300 shadow-soft focus:shadow-medium bg-white/80 backdrop-blur-sm"
+                />
+              </div>
             </div>
+            <button className="inline-flex items-center px-8 py-4 border border-neutral-300 rounded-xl text-base font-semibold text-neutral-700 bg-white hover:bg-neutral-50 shadow-soft hover:shadow-medium transition-all duration-300 hover:scale-105">
+              <Filter className="mr-3 h-6 w-6" />
+              Advanced Filters
+            </button>
           </div>
-          <button className="inline-flex items-center px-6 py-3 border border-neutral-300 rounded-xl text-sm font-medium text-neutral-700 bg-white hover:bg-neutral-50 shadow-soft hover:shadow-medium transition-all duration-200">
-            <Filter className="mr-2 h-5 w-5" />
-            Filters
-          </button>
         </div>
       </div>
 
       {/* Questionnaire List */}
-      <div className="bg-white shadow-soft rounded-xl border border-neutral-200 overflow-hidden">
+      <div className="bg-white shadow-large rounded-2xl border border-neutral-200 overflow-hidden">
         {questionnaires.length > 0 ? (
           <div className="divide-y divide-neutral-100">
-            {questionnaires.map((questionnaire) => (
-              <div key={questionnaire._id} className="p-6 hover:bg-neutral-50 transition-colors">
-                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            {questionnaires.map((questionnaire, index) => (
+              <div key={questionnaire._id} className="group p-8 hover:bg-gradient-to-r hover:from-primary-50/50 hover:to-secondary-50/50 transition-all duration-300 animate-fade-in" style={{animationDelay: `${index * 0.1}s`}}>
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-neutral-900">
-                      {questionnaire.title}
-                    </h3>
-                    <p className="mt-2 text-neutral-600">
-                      {questionnaire.description || 'No description'}
-                    </p>
-                    <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-neutral-500">
-                      <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                    <div className="flex items-start gap-4">
+                      <div className={`p-4 rounded-xl shadow-soft group-hover:scale-110 transition-transform duration-300 ${
                         questionnaire.status === 'published'
-                          ? 'bg-secondary-100 text-secondary-800'
+                          ? 'bg-gradient-to-br from-secondary-100 to-secondary-200'
                           : questionnaire.status === 'draft'
-                          ? 'bg-accent-100 text-accent-800'
-                          : 'bg-neutral-100 text-neutral-800'
+                          ? 'bg-gradient-to-br from-accent-100 to-accent-200'
+                          : 'bg-gradient-to-br from-neutral-100 to-neutral-200'
                       }`}>
-                        {questionnaire.status}
-                      </span>
-                      <span>Responses: {questionnaire.stats?.totalResponses || 0}</span>
-                      <span>Created: {new Date(questionnaire.createdAt).toLocaleDateString()}</span>
+                        <FileText className={`h-8 w-8 ${
+                          questionnaire.status === 'published'
+                            ? 'text-secondary-600'
+                            : questionnaire.status === 'draft'
+                            ? 'text-accent-600'
+                            : 'text-neutral-600'
+                        }`} />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-2xl font-bold text-neutral-900 group-hover:text-primary-700 transition-colors">
+                          {questionnaire.title}
+                        </h3>
+                        <p className="mt-2 text-neutral-600 text-lg">
+                          {questionnaire.description || 'No description provided'}
+                        </p>
+                        <div className="mt-4 flex flex-wrap items-center gap-4">
+                          <span className={`inline-flex items-center px-4 py-2 text-sm font-semibold rounded-full shadow-soft ${
+                            questionnaire.status === 'published'
+                              ? 'bg-secondary-100 text-secondary-800 border border-secondary-200'
+                              : questionnaire.status === 'draft'
+                              ? 'bg-accent-100 text-accent-800 border border-accent-200'
+                              : 'bg-neutral-100 text-neutral-800 border border-neutral-200'
+                          }`}>
+                            <div className={`w-2 h-2 rounded-full mr-2 ${
+                              questionnaire.status === 'published'
+                                ? 'bg-secondary-500'
+                                : questionnaire.status === 'draft'
+                                ? 'bg-accent-500'
+                                : 'bg-neutral-500'
+                            }`}></div>
+                            {questionnaire.status}
+                          </span>
+                          <div className="flex items-center text-neutral-500">
+                            <CheckCircle className="h-4 w-4 mr-1" />
+                            <span className="font-medium">{questionnaire.stats?.totalResponses || 0} responses</span>
+                          </div>
+                          <div className="flex items-center text-neutral-500">
+                            <Clock className="h-4 w-4 mr-1" />
+                            <span>Created {new Date(questionnaire.createdAt).toLocaleDateString()}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
                     <Link
                       to={`/questionnaires/${questionnaire._id}`}
-                      className="text-primary-600 hover:text-primary-700 text-sm font-medium transition-colors"
+                      className="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 group/btn"
                     >
-                      View
+                      <Eye className="mr-2 h-5 w-5 group-hover/btn:scale-110 transition-transform" />
+                      View Results
                     </Link>
                     <Link
                       to={`/questionnaires/${questionnaire._id}/edit`}
-                      className="text-neutral-600 hover:text-neutral-700 text-sm font-medium transition-colors"
+                      className="inline-flex items-center px-6 py-3 border border-neutral-300 text-neutral-700 hover:bg-neutral-50 font-semibold rounded-xl shadow-soft hover:shadow-medium transition-all duration-300"
                     >
-                      Edit
+                      Edit Form
                     </Link>
                   </div>
                 </div>
@@ -105,21 +148,27 @@ const QuestionnaireList = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-16">
-            <div className="mx-auto w-24 h-24 bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-full flex items-center justify-center mb-6">
-              <PlusCircle className="h-12 w-12 text-neutral-400" />
+          <div className="text-center py-20 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-50/30 via-secondary-50/30 to-accent-50/30 rounded-2xl"></div>
+            <div className="relative z-10">
+              <div className="mx-auto w-32 h-32 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-full flex items-center justify-center mb-8 shadow-large">
+                <PlusCircle className="h-16 w-16 text-primary-600" />
+              </div>
+              <h3 className="text-3xl font-bold text-neutral-900 mb-4">Ready to create your first questionnaire?</h3>
+              <p className="text-neutral-600 text-xl mb-10 max-w-lg mx-auto leading-relaxed">
+                Start building beautiful forms and collecting valuable insights from your audience. It's quick, easy, and powerful.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Link
+                  to="/questionnaires/new"
+                  className="inline-flex items-center px-10 py-5 border border-transparent shadow-large text-lg font-bold rounded-2xl text-white bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 hover:from-primary-700 hover:via-primary-800 hover:to-secondary-700 hover:shadow-glow transition-all duration-300 group"
+                >
+                  <PlusCircle className="mr-3 h-7 w-7 group-hover:rotate-90 transition-transform duration-300" />
+                  Create Your First Questionnaire
+                </Link>
+                <span className="text-neutral-500 text-sm">No credit card required • Free forever</span>
+              </div>
             </div>
-            <h3 className="text-lg font-semibold text-neutral-900 mb-2">No questionnaires yet</h3>
-            <p className="text-neutral-600 mb-8 max-w-sm mx-auto">
-              Create your first questionnaire to start collecting responses and insights.
-            </p>
-            <Link
-              to="/questionnaires/new"
-              className="inline-flex items-center px-6 py-3 border border-transparent shadow-soft text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 hover:shadow-medium transition-all duration-300"
-            >
-              <PlusCircle className="mr-2 h-5 w-5" />
-              Create Your First Questionnaire
-            </Link>
           </div>
         )}
       </div>
