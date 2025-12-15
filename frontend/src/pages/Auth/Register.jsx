@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Eye, EyeOff, User, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff, User, Mail, Lock, ArrowRight } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 const Register = () => {
@@ -28,25 +28,25 @@ const Register = () => {
     });
 
     if (result.success) {
-      navigate('/dashboard');
+      navigate('/app/dashboard');
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <div className="mx-auto h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-br from-primary-100 to-primary-200 shadow-soft">
-            <User className="h-8 w-8 text-primary-600" />
+        <div className="text-center animate-fade-in">
+          <div className="mx-auto h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-br from-primary-100 to-primary-200 shadow-soft hover:shadow-medium transition-all duration-300 transform hover:scale-110 animate-bounce-subtle">
+            <User className="h-8 w-8 text-primary-600 animate-pulse" />
           </div>
-          <h2 className="mt-6 text-center text-3xl font-bold text-neutral-900">
+          <h2 className="mt-6 text-center text-3xl font-bold text-neutral-900 animate-fade-in" style={{animationDelay: '0.2s'}}>
             Create your account
           </h2>
-          <p className="mt-2 text-center text-sm text-neutral-600">
+          <p className="mt-2 text-center text-sm text-neutral-600 animate-fade-in" style={{animationDelay: '0.4s'}}>
             Or{' '}
             <Link
               to="/login"
-              className="font-medium text-primary-600 hover:text-primary-700 transition-colors"
+              className="font-medium text-primary-600 hover:text-primary-700 transition-colors hover:underline decoration-2 underline-offset-2"
             >
               sign in to existing account
             </Link>
@@ -66,7 +66,7 @@ const Register = () => {
                     type="text"
                     autoComplete="given-name"
                     required
-                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium"
+                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium hover:border-neutral-400 focus:scale-105 transform"
                     placeholder="First name"
                     {...register('firstName', {
                       required: 'First name is required',
@@ -90,7 +90,7 @@ const Register = () => {
                     type="text"
                     autoComplete="family-name"
                     required
-                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium"
+                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium hover:border-neutral-400 focus:scale-105 transform"
                     placeholder="Last name"
                     {...register('lastName', {
                       required: 'Last name is required',
@@ -116,7 +116,7 @@ const Register = () => {
                     type="email"
                     autoComplete="email"
                     required
-                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium"
+                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium hover:border-neutral-400 focus:scale-105 transform"
                     placeholder="Enter your email"
                     {...register('email', {
                       required: 'Email is required',
@@ -143,7 +143,7 @@ const Register = () => {
                     type={showPassword ? 'text' : 'password'}
                     autoComplete="new-password"
                     required
-                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium"
+                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium hover:border-neutral-400 focus:scale-105 transform"
                     placeholder="Create a password"
                     {...register('password', {
                       required: 'Password is required',
@@ -184,7 +184,7 @@ const Register = () => {
                     type={showConfirmPassword ? 'text' : 'password'}
                     autoComplete="new-password"
                     required
-                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium"
+                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium hover:border-neutral-400 focus:scale-105 transform"
                     placeholder="Confirm your password"
                     {...register('confirmPassword', {
                       required: 'Please confirm your password',
@@ -239,12 +239,15 @@ const Register = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-soft hover:shadow-medium"
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-soft hover:shadow-medium transform hover:scale-105 active:scale-95"
               >
                 {loading ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                 ) : (
-                  'Create account'
+                  <>
+                    Create account
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+                  </>
                 )}
               </button>
             </div>

@@ -22,7 +22,7 @@ import Register from './pages/Auth/Register';
 import PrivateRoute from './components/Auth/PrivateRoute';
 
 // Public Components
-// In App.jsx
+import Landing from './pages/Landing';
 import PublicQuestionnaire from './pages/public/PublicQuestionnaire';
 
 
@@ -35,6 +35,7 @@ function App() {
           <div className="min-h-screen bg-gray-50">
             <Routes>
               {/* Public Routes */}
+              <Route path="/" element={<Landing />} />
               <Route path="/questionnaire/:id" element={<PublicQuestionnaire />} />
 
               {/* Auth Routes */}
@@ -42,12 +43,12 @@ function App() {
               <Route path="/register" element={<Register />} />
 
               {/* Protected Routes */}
-              <Route path="/" element={
+              <Route path="/app" element={
                 <PrivateRoute>
                   <Layout />
                 </PrivateRoute>
               }>
-                <Route index element={<Navigate to="/dashboard" replace />} />
+                <Route index element={<Navigate to="/app/dashboard" replace />} />
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="questionnaires" element={<QuestionnaireList />} />
                 <Route path="questionnaires/new" element={<QuestionnaireBuilder />} />
@@ -60,7 +61,7 @@ function App() {
               </Route>
 
               {/* Catch all route */}
-              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
 
             <Toaster

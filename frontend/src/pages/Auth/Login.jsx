@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 const Login = () => {
@@ -28,14 +28,14 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-50 via-white to-secondary-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <div className="mx-auto h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-r from-primary-600 to-primary-700 shadow-large">
-            <Mail className="h-8 w-8 text-white" />
+        <div className="text-center animate-fade-in">
+          <div className="mx-auto h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-r from-primary-600 to-primary-700 shadow-large hover:shadow-glow transition-all duration-300 transform hover:scale-110 animate-bounce-subtle">
+            <Mail className="h-8 w-8 text-white animate-pulse" />
           </div>
-          <h2 className="mt-6 text-center text-3xl font-bold text-neutral-900">
+          <h2 className="mt-6 text-center text-3xl font-bold text-neutral-900 animate-fade-in" style={{animationDelay: '0.2s'}}>
             Welcome back
           </h2>
-          <p className="mt-2 text-center text-sm text-neutral-600">
+          <p className="mt-2 text-center text-sm text-neutral-600 animate-fade-in" style={{animationDelay: '0.4s'}}>
             Sign in to your account to continue
           </p>
         </div>
@@ -53,7 +53,7 @@ const Login = () => {
                     type="email"
                     autoComplete="email"
                     required
-                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium"
+                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium hover:border-neutral-400 focus:scale-105 transform"
                     placeholder="Enter your email"
                     {...register('email', {
                       required: 'Email is required',
@@ -63,7 +63,7 @@ const Login = () => {
                       },
                     })}
                   />
-                  <Mail className="absolute right-3 top-3.5 h-5 w-5 text-neutral-400" />
+                  <Mail className="absolute right-3 top-3.5 h-5 w-5 text-neutral-400 transition-colors duration-200 focus-within:text-primary-500" />
                 </div>
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
@@ -80,7 +80,7 @@ const Login = () => {
                     type={showPassword ? 'text' : 'password'}
                     autoComplete="current-password"
                     required
-                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium"
+                    className="appearance-none block w-full px-4 py-3 border border-neutral-300 rounded-xl placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 shadow-soft focus:shadow-medium hover:border-neutral-400 focus:scale-105 transform"
                     placeholder="Enter your password"
                     {...register('password', {
                       required: 'Password is required',
@@ -92,13 +92,13 @@ const Login = () => {
                   />
                   <button
                     type="button"
-                    className="absolute right-3 top-3.5"
+                    className="absolute right-3 top-3.5 hover:text-primary-500 transition-colors duration-200 p-1 rounded hover:bg-primary-50"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeOff className="h-5 w-5 text-neutral-400" />
+                      <EyeOff className="h-5 w-5 text-neutral-400 hover:text-primary-500 transition-colors duration-200" />
                     ) : (
-                      <Eye className="h-5 w-5 text-neutral-400" />
+                      <Eye className="h-5 w-5 text-neutral-400 hover:text-primary-500 transition-colors duration-200" />
                     )}
                   </button>
                 </div>
@@ -132,12 +132,15 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-soft hover:shadow-medium"
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-soft hover:shadow-medium transform hover:scale-105 active:scale-95"
               >
                 {loading ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                 ) : (
-                  'Sign in'
+                  <>
+                    Sign in
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
+                  </>
                 )}
               </button>
             </div>
@@ -147,7 +150,7 @@ const Login = () => {
                 Don't have an account?{' '}
                 <Link
                   to="/register"
-                  className="font-medium text-primary-600 hover:text-primary-700 transition-colors"
+                  className="font-medium text-primary-600 hover:text-primary-700 transition-colors hover:underline decoration-2 underline-offset-2"
                 >
                   Sign up
                 </Link>

@@ -79,85 +79,85 @@ const Dashboard = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 lg:gap-8">
-        <div className="relative overflow-hidden bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 p-8 rounded-3xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer">
+        <Link to="/app/questionnaires" className="relative overflow-hidden bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 p-8 rounded-3xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer block transform hover:scale-105 active:scale-95">
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent group-hover:from-white/20 group-hover:to-white/5 transition-all duration-300"></div>
           <div className="absolute -top-8 -right-8 w-24 h-24 bg-white/25 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 animate-pulse"></div>
           <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-primary-300/30 rounded-full blur-xl animate-bounce-subtle"></div>
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-6">
-              <div className="p-4 bg-white/25 backdrop-blur-sm rounded-2xl shadow-soft">
-                <FileText className="h-8 w-8 text-white drop-shadow-lg" />
+              <div className="p-4 bg-white/25 backdrop-blur-sm rounded-2xl shadow-soft group-hover:bg-white/30 transition-colors duration-300">
+                <FileText className="h-8 w-8 text-white drop-shadow-lg group-hover:rotate-12 transition-transform duration-300" />
               </div>
-              <div className="p-2 bg-white/20 rounded-xl">
-                <TrendingUp className="h-5 w-5 text-primary-100" />
+              <div className="p-2 bg-white/20 rounded-xl group-hover:bg-white/30 transition-colors duration-300">
+                <TrendingUp className="h-5 w-5 text-primary-100 group-hover:text-white transition-colors duration-300" />
               </div>
             </div>
             <div>
-              <p className="text-primary-100 text-sm font-semibold mb-2 uppercase tracking-wide">Total Questionnaires</p>
-              <p className="text-5xl font-black text-white drop-shadow-lg">{stats.totalQuestionnaires || 0}</p>
+              <p className="text-primary-100 text-sm font-semibold mb-2 uppercase tracking-wide group-hover:text-white/90 transition-colors duration-300">Total Questionnaires</p>
+              <p className="text-5xl font-black text-white drop-shadow-lg group-hover:scale-110 transition-transform duration-300">{stats.totalQuestionnaires || 0}</p>
             </div>
           </div>
-        </div>
+        </Link>
 
-        <div className="relative overflow-hidden bg-gradient-to-br from-secondary-500 via-secondary-600 to-secondary-700 p-8 rounded-3xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer" style={{animationDelay: '0.1s'}}>
+        <Link to="/app/questionnaires" className="relative overflow-hidden bg-gradient-to-br from-secondary-500 via-secondary-600 to-secondary-700 p-8 rounded-3xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer block transform hover:scale-105 active:scale-95" style={{animationDelay: '0.1s'}}>
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent group-hover:from-white/20 group-hover:to-white/5 transition-all duration-300"></div>
           <div className="absolute -top-8 -right-8 w-24 h-24 bg-white/25 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 animate-pulse" style={{animationDelay: '1s'}}></div>
           <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-secondary-300/30 rounded-full blur-xl animate-bounce-subtle" style={{animationDelay: '0.5s'}}></div>
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-6">
-              <div className="p-4 bg-white/25 backdrop-blur-sm rounded-2xl shadow-soft">
-                <CheckCircle className="h-8 w-8 text-white drop-shadow-lg" />
+              <div className="p-4 bg-white/25 backdrop-blur-sm rounded-2xl shadow-soft group-hover:bg-white/30 transition-colors duration-300">
+                <CheckCircle className="h-8 w-8 text-white drop-shadow-lg group-hover:rotate-12 transition-transform duration-300" />
               </div>
-              <div className="p-2 bg-white/20 rounded-xl">
-                <TrendingUp className="h-5 w-5 text-secondary-100" />
+              <div className="p-2 bg-white/20 rounded-xl group-hover:bg-white/30 transition-colors duration-300">
+                <TrendingUp className="h-5 w-5 text-secondary-100 group-hover:text-white transition-colors duration-300" />
               </div>
             </div>
             <div>
-              <p className="text-secondary-100 text-sm font-semibold mb-2 uppercase tracking-wide">Total Responses</p>
-              <p className="text-5xl font-black text-white drop-shadow-lg">{stats.totalResponses || 0}</p>
+              <p className="text-secondary-100 text-sm font-semibold mb-2 uppercase tracking-wide group-hover:text-white/90 transition-colors duration-300">Total Responses</p>
+              <p className="text-5xl font-black text-white drop-shadow-lg group-hover:scale-110 transition-transform duration-300">{stats.totalResponses || 0}</p>
             </div>
           </div>
-        </div>
+        </Link>
 
-        <div className="relative overflow-hidden bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 p-8 rounded-3xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer" style={{animationDelay: '0.2s'}}>
+        <Link to="/app/analytics" className="relative overflow-hidden bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 p-8 rounded-3xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer block transform hover:scale-105 active:scale-95" style={{animationDelay: '0.2s'}}>
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent group-hover:from-white/20 group-hover:to-white/5 transition-all duration-300"></div>
           <div className="absolute -top-8 -right-8 w-24 h-24 bg-white/25 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 animate-pulse" style={{animationDelay: '2s'}}></div>
           <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-accent-300/30 rounded-full blur-xl animate-bounce-subtle" style={{animationDelay: '1s'}}></div>
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-6">
-              <div className="p-4 bg-white/25 backdrop-blur-sm rounded-2xl shadow-soft">
-                <TrendingUp className="h-8 w-8 text-white drop-shadow-lg" />
+              <div className="p-4 bg-white/25 backdrop-blur-sm rounded-2xl shadow-soft group-hover:bg-white/30 transition-colors duration-300">
+                <TrendingUp className="h-8 w-8 text-white drop-shadow-lg group-hover:rotate-12 transition-transform duration-300" />
               </div>
-              <div className="p-2 bg-white/20 rounded-xl">
-                <TrendingUp className="h-5 w-5 text-accent-100" />
+              <div className="p-2 bg-white/20 rounded-xl group-hover:bg-white/30 transition-colors duration-300">
+                <TrendingUp className="h-5 w-5 text-accent-100 group-hover:text-white transition-colors duration-300" />
               </div>
             </div>
             <div>
-              <p className="text-accent-100 text-sm font-semibold mb-2 uppercase tracking-wide">Completion Rate</p>
-              <p className="text-5xl font-black text-white drop-shadow-lg">
+              <p className="text-accent-100 text-sm font-semibold mb-2 uppercase tracking-wide group-hover:text-white/90 transition-colors duration-300">Completion Rate</p>
+              <p className="text-5xl font-black text-white drop-shadow-lg group-hover:scale-110 transition-transform duration-300">
                 {stats.completionRate ? `${stats.completionRate.toFixed(1)}%` : '0%'}
               </p>
             </div>
           </div>
-        </div>
+        </Link>
 
-        <div className="relative overflow-hidden bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 p-8 rounded-3xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer" style={{animationDelay: '0.3s'}}>
+        <div className="relative overflow-hidden bg-gradient-to-br from-primary-600 via-secondary-600 to-accent-600 p-8 rounded-3xl shadow-large hover:shadow-glow transition-all duration-500 animate-fade-in group cursor-pointer transform hover:scale-105 active:scale-95" style={{animationDelay: '0.3s'}}>
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent group-hover:from-white/20 group-hover:to-white/5 transition-all duration-300"></div>
           <div className="absolute -top-8 -right-8 w-24 h-24 bg-white/25 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 animate-pulse" style={{animationDelay: '3s'}}></div>
           <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-primary-300/30 rounded-full blur-xl animate-bounce-subtle" style={{animationDelay: '1.5s'}}></div>
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-6">
-              <div className="p-4 bg-white/25 backdrop-blur-sm rounded-2xl shadow-soft">
-                <Clock className="h-8 w-8 text-white drop-shadow-lg" />
+              <div className="p-4 bg-white/25 backdrop-blur-sm rounded-2xl shadow-soft group-hover:bg-white/30 transition-colors duration-300">
+                <Clock className="h-8 w-8 text-white drop-shadow-lg group-hover:rotate-12 transition-transform duration-300" />
               </div>
-              <div className="p-2 bg-white/20 rounded-xl">
-                <TrendingUp className="h-5 w-5 text-primary-100" />
+              <div className="p-2 bg-white/20 rounded-xl group-hover:bg-white/30 transition-colors duration-300">
+                <TrendingUp className="h-5 w-5 text-primary-100 group-hover:text-white transition-colors duration-300" />
               </div>
             </div>
             <div>
-              <p className="text-primary-100 text-sm font-semibold mb-2 uppercase tracking-wide">Recent Activity</p>
-              <p className="text-5xl font-black text-white drop-shadow-lg">{analytics?.recentActivity?.responses || 0}</p>
-              <p className="text-sm text-primary-200 mt-2 font-medium">last 7 days</p>
+              <p className="text-primary-100 text-sm font-semibold mb-2 uppercase tracking-wide group-hover:text-white/90 transition-colors duration-300">Recent Activity</p>
+              <p className="text-5xl font-black text-white drop-shadow-lg group-hover:scale-110 transition-transform duration-300">{analytics?.recentActivity?.responses || 0}</p>
+              <p className="text-sm text-primary-200 mt-2 font-medium group-hover:text-white/80 transition-colors duration-300">last 7 days</p>
             </div>
           </div>
         </div>
@@ -179,32 +179,32 @@ const Dashboard = () => {
         <div className="divide-y divide-neutral-100">
           {recentQuestionnaires.length > 0 ? (
             recentQuestionnaires.map((questionnaire) => (
-              <div key={questionnaire._id} className="px-6 py-4">
+              <div key={questionnaire._id} className="px-6 py-4 group hover:bg-neutral-50 transition-colors duration-200 cursor-pointer">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
-                    <FileText className="h-5 w-5 text-gray-400 mr-3" />
+                    <FileText className="h-5 w-5 text-gray-400 mr-3 group-hover:text-primary-500 group-hover:scale-110 transition-all duration-200" />
                     <div>
-                      <h3 className="text-sm font-medium text-gray-900">
+                      <h3 className="text-sm font-medium text-gray-900 group-hover:text-primary-700 transition-colors duration-200">
                         {questionnaire.title}
                       </h3>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500 group-hover:text-gray-600 transition-colors duration-200">
                         {questionnaire.description || 'No description'}
                       </p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
-                    <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                    <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full transition-all duration-200 group-hover:scale-105 ${
                       questionnaire.status === 'published'
-                        ? 'bg-green-100 text-green-800'
+                        ? 'bg-green-100 text-green-800 group-hover:bg-green-200'
                         : questionnaire.status === 'draft'
-                        ? 'bg-yellow-100 text-yellow-800'
-                        : 'bg-gray-100 text-gray-800'
+                        ? 'bg-yellow-100 text-yellow-800 group-hover:bg-yellow-200'
+                        : 'bg-gray-100 text-gray-800 group-hover:bg-gray-200'
                     }`}>
                       {questionnaire.status}
                     </span>
                     <Link
-                      to={`/questionnaires/${questionnaire._id}`}
-                      className="text-blue-600 hover:text-blue-500 text-sm"
+                      to={`/app/questionnaires/${questionnaire._id}`}
+                      className="text-blue-600 hover:text-blue-500 text-sm p-1 rounded hover:bg-blue-50 transition-all duration-200 group-hover:scale-110"
                     >
                       <Eye className="h-4 w-4" />
                     </Link>
@@ -222,10 +222,10 @@ const Dashboard = () => {
                 Get started by creating your first questionnaire. It's easy and takes just a few minutes.
               </p>
               <Link
-                to="/questionnaires/new"
-                className="inline-flex items-center px-6 py-3 border border-transparent shadow-soft text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 hover:shadow-medium transition-all duration-300"
+                to="/app/questionnaires/new"
+                className="inline-flex items-center px-6 py-3 border border-transparent shadow-soft text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 hover:shadow-medium transition-all duration-300 transform hover:scale-105 active:scale-95"
               >
-                <PlusCircle className="mr-2 h-5 w-5" />
+                <PlusCircle className="mr-2 h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
                 Create Your First Questionnaire
               </Link>
             </div>
@@ -241,41 +241,41 @@ const Dashboard = () => {
         <div className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Link
-              to="/questionnaires/new"
-              className="group flex items-center p-5 border border-neutral-200 rounded-xl hover:border-primary-300 hover:bg-gradient-to-br hover:from-primary-50 hover:to-primary-100 transition-all duration-300 shadow-soft hover:shadow-medium"
+              to="/app/questionnaires/new"
+              className="group flex items-center p-5 border border-neutral-200 rounded-xl hover:border-primary-300 hover:bg-gradient-to-br hover:from-primary-50 hover:to-primary-100 transition-all duration-300 shadow-soft hover:shadow-medium transform hover:scale-105 active:scale-95"
             >
-              <div className="p-3 bg-gradient-to-br from-primary-100 to-primary-200 rounded-xl mr-4 group-hover:scale-110 transition-transform duration-300">
-                <PlusCircle className="h-6 w-6 text-primary-600" />
+              <div className="p-3 bg-gradient-to-br from-primary-100 to-primary-200 rounded-xl mr-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                <PlusCircle className="h-6 w-6 text-primary-600 group-hover:text-primary-700 transition-colors duration-300" />
               </div>
               <div>
-                <h3 className="text-base font-semibold text-neutral-900">Create Questionnaire</h3>
-                <p className="text-sm text-neutral-600">Start building a new form</p>
+                <h3 className="text-base font-semibold text-neutral-900 group-hover:text-primary-700 transition-colors duration-300">Create Questionnaire</h3>
+                <p className="text-sm text-neutral-600 group-hover:text-primary-600 transition-colors duration-300">Start building a new form</p>
               </div>
             </Link>
 
             <Link
-              to="/workspaces"
-              className="group flex items-center p-5 border border-neutral-200 rounded-xl hover:border-secondary-300 hover:bg-gradient-to-br hover:from-secondary-50 hover:to-secondary-100 transition-all duration-300 shadow-soft hover:shadow-medium"
+              to="/app/workspaces"
+              className="group flex items-center p-5 border border-neutral-200 rounded-xl hover:border-secondary-300 hover:bg-gradient-to-br hover:from-secondary-50 hover:to-secondary-100 transition-all duration-300 shadow-soft hover:shadow-medium transform hover:scale-105 active:scale-95"
             >
-              <div className="p-3 bg-gradient-to-br from-secondary-100 to-secondary-200 rounded-xl mr-4 group-hover:scale-110 transition-transform duration-300">
-                <Users className="h-6 w-6 text-secondary-600" />
+              <div className="p-3 bg-gradient-to-br from-secondary-100 to-secondary-200 rounded-xl mr-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                <Users className="h-6 w-6 text-secondary-600 group-hover:text-secondary-700 transition-colors duration-300" />
               </div>
               <div>
-                <h3 className="text-base font-semibold text-neutral-900">Manage Workspaces</h3>
-                <p className="text-sm text-neutral-600">Collaborate with your team</p>
+                <h3 className="text-base font-semibold text-neutral-900 group-hover:text-secondary-700 transition-colors duration-300">Manage Workspaces</h3>
+                <p className="text-sm text-neutral-600 group-hover:text-secondary-600 transition-colors duration-300">Collaborate with your team</p>
               </div>
             </Link>
 
             <Link
-              to="/analytics"
-              className="group flex items-center p-5 border border-neutral-200 rounded-xl hover:border-accent-300 hover:bg-gradient-to-br hover:from-accent-50 hover:to-accent-100 transition-all duration-300 shadow-soft hover:shadow-medium"
+              to="/app/analytics"
+              className="group flex items-center p-5 border border-neutral-200 rounded-xl hover:border-accent-300 hover:bg-gradient-to-br hover:from-accent-50 hover:to-accent-100 transition-all duration-300 shadow-soft hover:shadow-medium transform hover:scale-105 active:scale-95"
             >
-              <div className="p-3 bg-gradient-to-br from-accent-100 to-accent-200 rounded-xl mr-4 group-hover:scale-110 transition-transform duration-300">
-                <BarChart3 className="h-6 w-6 text-accent-600" />
+              <div className="p-3 bg-gradient-to-br from-accent-100 to-accent-200 rounded-xl mr-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                <BarChart3 className="h-6 w-6 text-accent-600 group-hover:text-accent-700 transition-colors duration-300" />
               </div>
               <div>
-                <h3 className="text-base font-semibold text-neutral-900">View Analytics</h3>
-                <p className="text-sm text-neutral-600">Analyze your responses</p>
+                <h3 className="text-base font-semibold text-neutral-900 group-hover:text-accent-700 transition-colors duration-300">View Analytics</h3>
+                <p className="text-sm text-neutral-600 group-hover:text-accent-600 transition-colors duration-300">Analyze your responses</p>
               </div>
             </Link>
           </div>

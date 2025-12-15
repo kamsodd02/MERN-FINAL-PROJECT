@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { PlusCircle, Search, Filter } from 'lucide-react';
+import { PlusCircle, Search, Filter, FileText, CheckCircle, Clock, Eye } from 'lucide-react';
 import { useQuestionnaire } from '../../contexts/QuestionnaireContext';
 
 const QuestionnaireList = () => {
@@ -40,8 +40,8 @@ const QuestionnaireList = () => {
               </p>
             </div>
             <Link
-              to="/questionnaires/new"
-              className="inline-flex items-center px-10 py-5 border-2 border-white/30 text-lg font-bold rounded-2xl text-white bg-white/20 backdrop-blur-sm hover:bg-white/30 hover:border-white/50 shadow-large hover:shadow-glow transition-all duration-300 group"
+              to="/app/questionnaires/new"
+              className="inline-flex items-center px-10 py-5 border-2 border-white/30 text-lg font-bold rounded-2xl text-white bg-white/20 backdrop-blur-sm hover:bg-white/30 hover:border-white/50 shadow-large hover:shadow-glow transition-all duration-300 group transform hover:scale-105 active:scale-95"
             >
               <PlusCircle className="mr-3 h-7 w-7 group-hover:rotate-90 transition-transform duration-300" />
               Create New Questionnaire
@@ -67,7 +67,7 @@ const QuestionnaireList = () => {
                 />
               </div>
             </div>
-            <button className="inline-flex items-center px-10 py-5 border-2 border-neutral-300 rounded-2xl text-lg font-semibold text-neutral-700 bg-white hover:bg-neutral-50 shadow-soft hover:shadow-medium transition-all duration-300 hover:scale-105 group">
+            <button className="inline-flex items-center px-10 py-5 border-2 border-neutral-300 rounded-2xl text-lg font-semibold text-neutral-700 bg-white hover:bg-neutral-50 shadow-soft hover:shadow-medium transition-all duration-300 hover:scale-105 active:scale-95 group">
               <Filter className="mr-3 h-7 w-7 group-hover:rotate-12 transition-transform duration-300" />
               Advanced Filters
             </button>
@@ -137,15 +137,15 @@ const QuestionnaireList = () => {
                   </div>
                   <div className="flex items-center space-x-4">
                     <Link
-                      to={`/questionnaires/${questionnaire._id}`}
-                      className="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 group/btn"
+                      to={`/app/questionnaires/${questionnaire._id}`}
+                      className="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 group/btn transform hover:scale-105 active:scale-95"
                     >
                       <Eye className="mr-2 h-5 w-5 group-hover/btn:scale-110 transition-transform" />
                       View Results
                     </Link>
                     <Link
-                      to={`/questionnaires/${questionnaire._id}/edit`}
-                      className="inline-flex items-center px-6 py-3 border border-neutral-300 text-neutral-700 hover:bg-neutral-50 font-semibold rounded-xl shadow-soft hover:shadow-medium transition-all duration-300"
+                      to={`/app/questionnaires/${questionnaire._id}/edit`}
+                      className="inline-flex items-center px-6 py-3 border border-neutral-300 text-neutral-700 hover:bg-neutral-50 font-semibold rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 transform hover:scale-105 active:scale-95"
                     >
                       Edit Form
                     </Link>
@@ -167,8 +167,8 @@ const QuestionnaireList = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link
-                  to="/questionnaires/new"
-                  className="inline-flex items-center px-10 py-5 border border-transparent shadow-large text-lg font-bold rounded-2xl text-white bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 hover:from-primary-700 hover:via-primary-800 hover:to-secondary-700 hover:shadow-glow transition-all duration-300 group"
+                  to="/app/questionnaires/new"
+                  className="inline-flex items-center px-10 py-5 border border-transparent shadow-large text-lg font-bold rounded-2xl text-white bg-gradient-to-r from-primary-600 via-primary-700 to-secondary-600 hover:from-primary-700 hover:via-primary-800 hover:to-secondary-700 hover:shadow-glow transition-all duration-300 group transform hover:scale-105 active:scale-95"
                 >
                   <PlusCircle className="mr-3 h-7 w-7 group-hover:rotate-90 transition-transform duration-300" />
                   Create Your First Questionnaire
